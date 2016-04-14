@@ -20,6 +20,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <CheckBox
+        android:id="@+id/moreThanEight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/moreThanEight"/>
+
     <TextView
         android:id="@+id/mostProbableLetter"
         android:layout_width="match_parent"

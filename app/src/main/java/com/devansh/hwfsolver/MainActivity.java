@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView letters, striked, mostProbableLetter;
     Button solve, findWords;
+    CheckBox moreThanEight;
     ListView list;
 
     private DawgArray dawgArray;
@@ -44,13 +46,14 @@ public class MainActivity extends AppCompatActivity {
         mostProbableLetter = (TextView) findViewById(R.id.mostProbableLetter);
         solve = (Button) findViewById(R.id.solve);
         findWords = (Button) findViewById(R.id.findWords);
+        moreThanEight = (CheckBox) findViewById(R.id.moreThanEight);
         list = (ListView) findViewById(R.id.list);
         list.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1));
 
         findWords.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findWords(letters.getText().toString());
+                findWords(letters.getText().toString(), moreThanEight.isChecked());
             }
         });
 
@@ -163,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
         }.execute();
     }
 
-    private void findWords(String letters) {
+    private void findWords(String letters, final boolean moreThanEight) {
         letters = letters.toLowerCase();
         startProgress();
         final int[] chars = new int[26];
@@ -179,6 +182,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if (dawgArray.isEndOFWord(currentNode)) {
                     res.add(prefix.toString());
+                }
+
+                if (prefix.length() == 8 && !moreThanEight) {
+                    return;
                 }
 
                 for (Map.Entry<Character, Integer> children : dawgArray
