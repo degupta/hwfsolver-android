@@ -116,32 +116,33 @@ public class MainActivity extends AppCompatActivity {
                 solveHelper(0, 0, new StringBuilder(), res);
                 Collections.sort(res);
 
-                int[] charCounts = new int[26];
-                HashSet<Character> seen = new HashSet<>();
-                for (String word : res) {
-                    int len = word.length();
-                    seen.clear();
-                    for (int i = 0; i < len; i++) {
-                        char c = (char) (word.charAt(i) - 'a');
-                        if (!seen.contains(c)) {
-                            charCounts[c]++;
-                            seen.add(c);
-                        }
-                    }
-                }
-
-                char bestLetter = 'a';
-                int bestValue = Integer.MIN_VALUE;
-                for (int i = 0; i < charCounts.length; i++) {
-                    if (charCounts[i] > bestValue && !strikedMap[i]) {
-                        bestValue = charCounts[i];
-                        bestLetter = (char) ('a' + i);
-                    }
-                }
-
-                if (bestValue == Integer.MIN_VALUE) {
+                if (res.size() == 0) {
                     probableText = "No solutions";
                 } else {
+
+                    int[] charCounts = new int[26];
+                    HashSet<Character> seen = new HashSet<>();
+                    for (String word : res) {
+                        int len = word.length();
+                        seen.clear();
+                        for (int i = 0; i < len; i++) {
+                            char c = (char) (word.charAt(i) - 'a');
+                            if (!seen.contains(c)) {
+                                charCounts[c]++;
+                                seen.add(c);
+                            }
+                        }
+                    }
+
+                    char bestLetter = 'a';
+                    int bestValue = Integer.MIN_VALUE;
+                    for (int i = 0; i < charCounts.length; i++) {
+                        if (charCounts[i] > bestValue && !strikedMap[i]) {
+                            bestValue = charCounts[i];
+                            bestLetter = (char) ('a' + i);
+                        }
+                    }
+
                     probableText = "Most Probable Letter: " + bestLetter + " (" +
                             charCounts[bestLetter - 'a'] + "/" + res.size() + ")";
                 }
