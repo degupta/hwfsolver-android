@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView letters, striked, mostProbableLetter;
     Button solve, findWords;
-    CheckBox moreThanEight;
+    CheckBox onlyHwfWords;
     ListView list;
 
     private DawgArray dawgArray;
@@ -46,14 +46,14 @@ public class MainActivity extends AppCompatActivity {
         mostProbableLetter = (TextView) findViewById(R.id.mostProbableLetter);
         solve = (Button) findViewById(R.id.solve);
         findWords = (Button) findViewById(R.id.findWords);
-        moreThanEight = (CheckBox) findViewById(R.id.moreThanEight);
+        onlyHwfWords = (CheckBox) findViewById(R.id.onlyHwfWords);
         list = (ListView) findViewById(R.id.list);
         list.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1));
 
         findWords.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findWords(letters.getText().toString(), moreThanEight.isChecked());
+                findWords(letters.getText().toString(), onlyHwfWords.isChecked());
             }
         });
 
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
         }.execute();
     }
 
-    private void findWords(String letters, final boolean moreThanEight) {
+    private void findWords(String letters, final boolean onlyHwfWords) {
         letters = letters.toLowerCase();
         startProgress();
         final int[] chars = new int[26];
@@ -180,11 +180,11 @@ public class MainActivity extends AppCompatActivity {
             private void findWordsHelper(int currentNode, StringBuilder prefix, List<String> res,
                                          int[] chars) {
 
-                if (dawgArray.isEndOFWord(currentNode)) {
+                if (dawgArray.isEndOFWord(currentNode) && (prefix.length() >= 4 || !onlyHwfWords)) {
                     res.add(prefix.toString());
                 }
 
-                if (prefix.length() == 8 && !moreThanEight) {
+                if (prefix.length() == 8 && onlyHwfWords) {
                     return;
                 }
 

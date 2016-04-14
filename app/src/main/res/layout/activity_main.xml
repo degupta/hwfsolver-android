@@ -21,11 +21,12 @@
         android:layout_height="wrap_content"/>
 
     <CheckBox
-        android:id="@+id/moreThanEight"
+        android:id="@+id/onlyHwfWords"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/moreThanEight"/>
+        android:checked="true"
+        android:text="@string/onlyHwfWords"/>
 
     <TextView
         android:id="@+id/mostProbableLetter"

@@ -3,5 +3,5 @@
     <string name="please_wait">Please wait...</string>
     <string name="solve">Solve</string>
     <string name="findWords">Find words</string>
-    <string name="moreThanEight">Find more than Eight Letters?</string>
+    <string name="onlyHwfWords">Only between four and eight letters</string>
 </resources>
