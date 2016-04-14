@@ -74,6 +74,12 @@ public class MainActivity extends AppCompatActivity {
             strikedMap[strikedLetters.charAt(i) - 'a'] = true;
         }
 
+        for (int i = 0; i < finalWord.length(); i++) {
+            if (finalWord.charAt(i) != '.') {
+                strikedMap[finalWord.charAt(i) - 'a'] = true;
+            }
+        }
+
 
         new AsyncTask<Void, Void, List<String>>() {
             String probableText = "";
@@ -121,12 +127,6 @@ public class MainActivity extends AppCompatActivity {
                             charCounts[c]++;
                             seen.add(c);
                         }
-                    }
-                }
-
-                for (int i = 0; i < finalWord.length(); i++) {
-                    if (finalWord.charAt(i) != '.') {
-                        strikedMap[finalWord.charAt(i) - 'a'] = true;
                     }
                 }
 
