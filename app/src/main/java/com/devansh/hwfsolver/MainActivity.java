@@ -68,17 +68,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void solve(String word, String strikedLetters) {
-        strikedLetters = strikedLetters.toLowerCase();
-        final String finalWord = word.toLowerCase();
+        strikedLetters = strikedLetters.toLowerCase().trim();
+        final String finalWord = word.toLowerCase().trim();
         startProgress();
 
         final boolean[] strikedMap = new boolean[26];
         for (int i = 0; i < strikedLetters.length(); i++) {
-            strikedMap[strikedLetters.charAt(i) - 'a'] = true;
+            if (strikedLetters.charAt(i) >= 'a' && strikedLetters.charAt(i) <= 'z') {
+                strikedMap[strikedLetters.charAt(i) - 'a'] = true;
+            }
         }
 
         for (int i = 0; i < finalWord.length(); i++) {
-            if (finalWord.charAt(i) != '.') {
+            if (finalWord.charAt(i) >= 'a' && finalWord.charAt(i) <= 'z') {
                 strikedMap[finalWord.charAt(i) - 'a'] = true;
             }
         }
@@ -167,11 +169,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void findWords(String letters, final boolean onlyHwfWords) {
-        letters = letters.toLowerCase();
+        letters = letters.toLowerCase().trim();
         startProgress();
         final int[] chars = new int[26];
         for (int i = 0; i < letters.length(); i++) {
-            chars[letters.charAt(i) - 'a']++;
+            if (letters.charAt(i) >= 'a' && letters.charAt(i) <= 'z') {
+                chars[letters.charAt(i) - 'a']++;
+            }
         }
         mostProbableLetter.setText("");
 
