@@ -67,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private boolean isVowel(char c) {
+        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
+    }
+
     private void solve(String word, String strikedLetters) {
         strikedLetters = strikedLetters.toLowerCase().trim();
         final String finalWord = word.toLowerCase().trim();
@@ -79,12 +83,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        int lastVowel = -1;
+
         for (int i = 0; i < finalWord.length(); i++) {
             if (finalWord.charAt(i) >= 'a' && finalWord.charAt(i) <= 'z') {
                 strikedMap[finalWord.charAt(i) - 'a'] = true;
+                if (isVowel(finalWord.charAt(i))) {
+                    lastVowel = i;
+                }
             }
         }
 
+        final int finalLastVowel = lastVowel;
 
         new AsyncTask<Void, Void, List<String>>() {
             String probableText = "";
@@ -106,7 +116,8 @@ public class MainActivity extends AppCompatActivity {
                     char child = children.getKey();
                     int childNode = children.getValue();
 
-                    if (current == child || (current == '.' && !strikedMap[child - 'a'])) {
+                    if (current == child || (current == '.' && !strikedMap[child - 'a'] &&
+                            (!isVowel(child) || currentIndex < finalLastVowel))) {
                         prefix.append(child);
                         solveHelper(childNode, currentIndex + 1, prefix, res);
                         prefix.replace(prefix.length() - 1, prefix.length(), "");
